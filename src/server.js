@@ -19,7 +19,6 @@ const port = process.env.PORT || 8080;
 })()
 
 
-// Setting up static directory
 app.use('/api/public', express.static(path.join(__dirname, 'public')));
 app.use('/api/private', express.static(path.join(__dirname, 'private')));
 app.use(morgan('combined'));

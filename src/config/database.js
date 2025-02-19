@@ -4,7 +4,7 @@ const mongoUri = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PA
 
 const setupMongoServer = async () => {
   try {
-    await mongoose.connect(mongoUri, process?.env?.ENV === 'local' ? {
+    await mongoose.connect(mongoUri, process?.env?.ENV?.toLowerCase() === 'local' ? {
       serverSelectionTimeoutMS: 120000, // Adjust timeout if needed
     } : null);
     console.info('Database connected successfully !!');
