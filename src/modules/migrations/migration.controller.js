@@ -1,4 +1,4 @@
-const Migration = require('./migration.model');
+const Migration = require('./migration.schema');
 const { migrate } = require('./2025-02-18_add_code');
 
 exports.migrateDatabase = async (req, res) => {
