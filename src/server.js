@@ -27,11 +27,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const userRoutes = require('./modules/users/user.route')
+const groupRoutes = require('./modules/groups/groups.route')
 
+const featuresRoutes = require('./modules/features/features.route')
 
-
-
+app.use("/api/features", featuresRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/groups", groupRoutes);
 
 
 app.get('/api/version', (req, res) => res.status(200).json({
