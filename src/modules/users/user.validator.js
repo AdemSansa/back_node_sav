@@ -30,6 +30,9 @@ const createOneValidation = [
   body('code.attempts')
     .optional()
     .isInt({ min: 0 }).withMessage('Attempts must be a positive integer'),
+  body('firstname').optional().isString().withMessage('Firstname must be a string'),
+  body('lastname').optional().isString().withMessage('Lastname must be a string'),
+  
 ];
 
 // Validation for reading a user

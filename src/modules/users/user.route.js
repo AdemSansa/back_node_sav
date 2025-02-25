@@ -4,14 +4,20 @@ const {  createOneValidation,
     updateOneValidation,
     deleteOneValidation,
     updateMeValidation, } =  require('./user.validator')
-const {getList, readOne, createOne, updateOne, deleteOne} = require('./user.controller');
+const {getList, readOne, createOne, updateOne, deleteOne ,getUserGrowth} = require('./user.controller');
 
 const router = express.Router();
 
 router.get('/',  getList);
-router.get('/:id', readOneValidation, readOne);
 router.post('/', createOneValidation, createOne);
-router.put('/:id', updateOneValidation,  updateOne);   
 router.delete('/:id', deleteOneValidation, deleteOne);
+
+router.get("/growth", getUserGrowth);
+
+
+
+
+//router for user growth
+
 
 module.exports = router;

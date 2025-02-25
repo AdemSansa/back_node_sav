@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+const crypto = require('crypto');
 
 const { Schema } = mongoose;
 
+// Zero-padding helper
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 
 const UserSchema = new Schema(
@@ -66,12 +68,27 @@ UserSchema.virtual('fullname').get(function () {
 
 // 🔹 Pre-Save Hook: Generate `code` and Update `search`
 UserSchema.pre('save', async function (next) {
-  if (!this.code.value) {
-    const userCount = await mongoose.model('User').countDocuments();
-    this.code.value = zeroPad(userCount + 1, 6); // Generates '000001', '000002', etc.
+  if (this.isNew) {
+    // Ensure `this.code` exists
+    if (!this.code) {
+      this.code = {};
+    }
+
+    // Generate a more unique code
+    if (!this.code.value) {
+      const randomCode = zeroPad(crypto.randomInt(0, 999999), 6); // Generates '000001' to '999999'
+      this.code.value = randomCode;
+    }
+
+    // Ensure expiration date is set
+    if (!this.code.expireIn) {
+      this.code.expireIn = moment().add(24, 'hours').toDate();
+    }
   }
 
+  // Update search field
   this.search = `${this.firstname} ${this.lastname} ${this.email} ${this.code.value}`;
+  
   next();
 });
 

@@ -1,4 +1,6 @@
 version: '3.8'
+
+
 services:
   sav-node:
     build:
@@ -9,10 +11,6 @@ services:
     volumes:
       - ./:/home/
     environment:
-      - MONGO_USERNAME=mongo
-      - MONGO_PASSWORD=mongo
-      - MONGO_PORT=27017
-      - MONGO_HOST=mongo-sav-node:27017
       - PORT=8400
       - ENV=LOCAL
       - URL_FRONT=localhost:4200
@@ -24,6 +22,7 @@ services:
       - EMAIL_USER=dev-team@tic-nova.com
       - EMAIL_PASS=dev-team0
       - PRIVATE_KEY=YjUzNjIwNzNTjkMyOGM7YgFkGZ5NMDZGMxZWjA2Y2zkxMk2ZWZjYjY2NTIyYzA01OTg05U2ZiNEYZTAzFmNhZj
+      - MONGO_URI=mongodb+srv://ademsansa7:ademaziz_database@sav-database.iqyiy.mongodb.net/?retryWrites=true&w=majority
     ports:
       - 8500:8400
     depends_on:

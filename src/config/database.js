@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-const mongoUri = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_DB_NAME}?authSource=admin${process.env.ENV.toLowerCase() !== 'local' ? '&replicaSet=rs0' : ''}`;
-
+const mongoUri = process.env.MONGO_URI;
 const setupMongoServer = async () => {
   try {
     await mongoose.connect(mongoUri, process?.env?.ENV?.toLowerCase() === 'local' ? {
