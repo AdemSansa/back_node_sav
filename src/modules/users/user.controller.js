@@ -7,21 +7,10 @@ const getList = async (req, res) => {
         const users = await model.find();
         res.json(users);
     } catch (error) {
-        errorCatch(error, res);
+        errorCatch(error,res);
     }
     };
 
-const readOne = async (req, res) => {
-    try {
-        const user = await model.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.json(user);
-    } catch (error) {
-        errorCatch(res, error);
-    }
-    };
 
 const createOne = async (req, res) => {
     try {
@@ -36,6 +25,8 @@ const createOne = async (req, res) => {
           expireIn: user.code.expireIn,
           attempts: user.code.attempts,
         },
+        firstname: user.firstname,
+        lastname: user.lastname,
         });
 
 
@@ -45,30 +36,55 @@ const createOne = async (req, res) => {
         await newOne.save();
         res.json({ message: 'User created successfully' });
     } catch (error) {
-        errorCatch(error, res);
     }
     }
-const updateOne = async (req, res) => {
-    try {
-        const user = await model.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        Object.assign(user, req.body);
-        await user.save();
-        res.json({ message: 'User updated successfully' });
-    } catch (error) {
-        errorCatch(res, error);
-    }
-    }
+
 const deleteOne = async (req, res) => {
     try {
-        await model.findByIdAndDelete(req.params.id);
+        await model.findByIdAndDelete(req.params._id);
         res.json({ message: 'User deleted successfully' });
     }
     catch (error) {
-        errorCatch(res, error);
     }
     }
-module.exports = { getList, readOne, createOne, updateOne, deleteOne };
+
+    const getUserGrowth = async (req, res) => {
+        try {
+            const { groupBy } = req.query; // Accept grouping parameter (day, week, month)
+            console.log(groupBy);
+            
+            let dateFormat;
+            switch (groupBy) {
+                case "month":
+                    dateFormat = "%Y-%m"; // Format as YYYY-MM
+                    break;
+                case "week":
+                    dateFormat = "%Y-%U"; // Format as YYYY-WEEK
+                    break;
+                case "day":
+                default:
+                    dateFormat = "%Y-%m-%d"; // Format as YYYY-MM-DD
+                    break;
+            }
+    
+            // Aggregation pipeline to group users by creation date
+            const userGrowth = await model.aggregate([
+                {
+                    $group: {
+                        _id: { $dateToString: { format: dateFormat, date: "$createdAt" } },
+                        count: { $sum: 1 },
+                    },
+                },
+                { $sort: { _id: 1 } } // Sort by date
+            ]);
+    
+            res.json(userGrowth);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
+    };
+
+    
+module.exports = { getList, createOne, deleteOne ,getUserGrowth};
 
