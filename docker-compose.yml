@@ -22,7 +22,7 @@ services:
       - EMAIL_USER=dev-team@tic-nova.com
       - EMAIL_PASS=dev-team0
       - PRIVATE_KEY=YjUzNjIwNzNTjkMyOGM7YgFkGZ5NMDZGMxZWjA2Y2zkxMk2ZWZjYjY2NTIyYzA01OTg05U2ZiNEYZTAzFmNhZj
-      - MONGO_URI=mongodb+srv://ademsansa7:ademaziz_database@sav-database.iqyiy.mongodb.net/?retryWrites=true&w=majority
+      - MONGO_URI=mongodb+srv://ademsansa7:ademaziz_database@sav-database.iqyiy.mongodb.net/?retryWrites=true&w=majority&appName=SAV-Database
     ports:
       - 8500:8400
     depends_on:
