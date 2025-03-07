@@ -19,17 +19,7 @@ const createOneValidation = [
     .optional()
     .isIn(['user', 'super']).withMessage('Type must be either "user" or "super"'),
 
-  body('code.value')
-    .notEmpty().withMessage('Code value is required')
-    .isString().withMessage('Code value must be a string'),
-
-  body('code.expireIn')
-    .optional()
-    .isISO8601().withMessage('Invalid expiration date format'),
-
-  body('code.attempts')
-    .optional()
-    .isInt({ min: 0 }).withMessage('Attempts must be a positive integer'),
+ 
   body('firstname').optional().isString().withMessage('Firstname must be a string'),
   body('lastname').optional().isString().withMessage('Lastname must be a string'),
   

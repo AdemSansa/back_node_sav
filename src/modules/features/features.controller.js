@@ -8,7 +8,8 @@ const getList = async (req, res) => {
         const list = await model.find();
         return res.status(200).json(list);
     } catch (e) {
-        return errorCatch(e, res);
+        console.log(e);
+        
     }
     };
 const createOne = async (req, res) => {
@@ -44,7 +45,8 @@ const readOne = async (req, res) => {
         }
         return res.status(200).json(feature);
     } catch (e) {
-        return errorCatch(e, res);
+        console.log(e);
+        
     }
 };
 

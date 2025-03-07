@@ -19,24 +19,17 @@ const createOne = async (req, res) => {
         email: user.email,
         password: user.password,
         company: user.company,
-        type: user.type,
-        code: {
-          value: user.code.value,
-          expireIn: user.code.expireIn,
-          attempts: user.code.attempts,
-        },
         firstname: user.firstname,
         lastname: user.lastname,
-        });
-
-
-
-
-        
+        });        
         await newOne.save();
         res.json({ message: 'User created successfully' });
     } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+        
     }
+
     }
 
 const deleteOne = async (req, res) => {
@@ -86,5 +79,5 @@ const deleteOne = async (req, res) => {
     };
 
     
-module.exports = { getList, createOne, deleteOne ,getUserGrowth};
+module.exports = { getList, createOne, deleteOne ,getUserGrowth };
 

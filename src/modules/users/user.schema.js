@@ -42,7 +42,7 @@ const UserSchema = new Schema(
     code: {
       value: {
         type: String,
-        required: true,
+        
       },
       expireIn: {
         type: Date,

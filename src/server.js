@@ -28,13 +28,15 @@ app.use(express.json());
 
 const userRoutes = require('./modules/users/user.route')
 const groupRoutes = require('./modules/groups/groups.route')
-
+const authRoutes = require('./modules/auth/auth.route')
 const featuresRoutes = require('./modules/features/features.route')
+const companiesRoutes = require('./modules/company/companies.route')
 
 app.use("/api/features", featuresRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/groups", groupRoutes);
-
+app.use("/api/auth", authRoutes);
+app.use("/api/companies", companiesRoutes);
 
 app.get('/api/version', (req, res) => res.status(200).json({
   version: process.env.VERSION,
